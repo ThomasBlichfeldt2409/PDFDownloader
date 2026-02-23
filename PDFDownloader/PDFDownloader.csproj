@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PDFDownloader.Core\PDFDownloader.Core.csproj" />
+    <ProjectReference Include="..\PDFDownloader.Infrastructure\PDFDownloader.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Rapporter\" />
+    <Folder Include="Output\" />
+  </ItemGroup>
+
+</Project>

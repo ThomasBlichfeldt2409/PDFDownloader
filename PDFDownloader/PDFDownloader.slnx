@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../PDFDownloader.Core/PDFDownloader.Core.csproj" />
+  <Project Path="../PDFDownloader.Infrastructure/PDFDownloader.Infrastructure.csproj" />
+  <Project Path="../PDFDownloader.Tests/PDFDownloader.Tests.csproj" />
+  <Project Path="PDFDownloader.csproj" />
+</Solution>
