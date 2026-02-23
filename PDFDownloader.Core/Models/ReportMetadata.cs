@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PDFDownloader.Core.Models
+﻿namespace PDFDownloader.Core.Models
 {
-    internal class ReportMetadata
+    public class ReportMetadata
     {
+        public string BRNummer { get; set; } = string.Empty;
+        public string PrimaryUrl { get; set; } = string.Empty;
+        public string? SecondaryUrl {  get; set; }
     }
 }

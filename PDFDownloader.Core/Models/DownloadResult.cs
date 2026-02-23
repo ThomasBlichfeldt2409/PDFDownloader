@@ -1,12 +1,8 @@
-﻿
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PDFDownloader.Core.Models
+﻿namespace PDFDownloader.Core.Models
 {
-    internal class DownloadResult
+    public class DownloadResult
     {
+        public string BRNummer { get; set; } = string.Empty;
+        public bool IsDownloaded { get; set; }
     }
 }
