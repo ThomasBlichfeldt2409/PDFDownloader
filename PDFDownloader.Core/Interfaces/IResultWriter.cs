@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PDFDownloader.Core.Models;
 
 namespace PDFDownloader.Core.Interfaces
 {
-    internal class IResultWriter
+    public interface IResultWriter
     {
+        Task WriteAsync(List<DownloadResult> results);   
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PDFDownloader.Core.Models;
 
 namespace PDFDownloader.Core.Interfaces
 {
-    internal class IMetadataReader
+    public interface IMetadataReader
     {
+        Task<List<ReportMetadata>> ReadAsync();
     }
 }
