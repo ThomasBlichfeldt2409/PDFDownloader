@@ -35,7 +35,7 @@ namespace PDFDownloader.Infrastructure.Excel
             {
                 string brNummer = row.Cell(_excelConfig.BRNummerColumn).GetString().Trim();
                 string primaryUrl = row.Cell(_excelConfig.PrimaryUrlColumn).GetString().Trim();
-                string secondaryUrl = row.Cell(_excelConfig.SecondaryColumn).GetString().Trim();
+                string secondaryUrl = row.Cell(_excelConfig.SecondaryUrlColumn).GetString().Trim();
 
                 if (string.IsNullOrWhiteSpace(brNummer))
                     continue;

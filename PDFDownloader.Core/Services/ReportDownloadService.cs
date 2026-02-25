@@ -19,9 +19,10 @@ namespace PDFDownloader.Core.Services
 
         public async Task ExecuteAsync()
         {
+            // Read URL's from the data
             List<ReportMetadata> reports = await _metadataReader.ReadAsync();
 
-            Console.WriteLine($"Read {reports.Count} reports");
+            
         }
     }
 }
