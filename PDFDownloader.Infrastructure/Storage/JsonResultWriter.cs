@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PDFDownloader.Core.Interfaces;
+using PDFDownloader.Core.Models;
 
 namespace PDFDownloader.Infrastructure.Storage
 {
-    internal class JsonResultWriter
+    public class JsonResultWriter : IResultWriter
     {
+        public Task WriteAsync(List<DownloadResult> results)
+        {
+            return Task.FromResult(new List<DownloadResult>()); 
+        }
     }
 }

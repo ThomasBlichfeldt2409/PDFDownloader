@@ -1,5 +1,4 @@
 ﻿using PDFDownloader.Core.Interfaces;
-using PDFDownloader.Core.Models;
 
 namespace PDFDownloader.Core.Services
 {

@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PDFDownloader.Core.Interfaces;
 
 namespace PDFDownloader.Infrastructure.Download
 {
-    internal class HttpReportDownloader
+    public class HttpReportDownloader : IReportDownloader
     {
+        public Task<bool> DownloadAsync(string url, string filePath)
+        {
+            return Task.FromResult(true);
+        }
     }
 }
