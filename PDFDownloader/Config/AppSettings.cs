@@ -1,4 +1,6 @@
-﻿namespace PDFDownloader.Config
+﻿using PDFDownloader.Core.Config;
+
+namespace PDFDownloader.Config
 {
     public class AppSettings
     {

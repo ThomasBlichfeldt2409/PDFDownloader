@@ -1,4 +1,4 @@
-﻿namespace PDFDownloader.Config
+﻿namespace PDFDownloader.Core.Config
 {
     public class ExcelConfig
     {

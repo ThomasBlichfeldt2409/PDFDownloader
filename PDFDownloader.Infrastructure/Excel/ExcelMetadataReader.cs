@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using PDFDownloader.Core.Config;
 using PDFDownloader.Core.Interfaces;
 using PDFDownloader.Core.Models;
 
@@ -7,10 +8,12 @@ namespace PDFDownloader.Infrastructure.Excel
     public class ExcelMetadataReader : IMetadataReader
     {
         private readonly string _filePath;
+        private readonly ExcelConfig _excelConfig;
 
-        public ExcelMetadataReader(string filePath)
+        public ExcelMetadataReader(string filePath, ExcelConfig excelConfig)
         {
             _filePath = filePath;
+            _excelConfig = excelConfig;
         }
 
         public Task<List<ReportMetadata>> ReadAsync()
@@ -26,13 +29,13 @@ namespace PDFDownloader.Infrastructure.Excel
             // RangeUsed() -> Returns the area that contains data
             // RowUsed() -> Returns only rows that contains data
             // Skip(1) -> Skips the first row (header row)
-            IEnumerable<IXLRangeRow> rows = worksheet.RangeUsed().RowsUsed().Skip(1);
+            IEnumerable<IXLRangeRow> rows = worksheet.RangeUsed().RowsUsed().Skip(_excelConfig.StartRow - 1);
 
             foreach (IXLRangeRow row in rows)
             {
-                string brNummer = row.Cell("A").GetString().Trim();
-                string primaryUrl = row.Cell("AL").GetString().Trim();
-                string secondaryUrl = row.Cell("AM").GetString().Trim();
+                string brNummer = row.Cell(_excelConfig.BRNummerColumn).GetString().Trim();
+                string primaryUrl = row.Cell(_excelConfig.PrimaryUrlColumn).GetString().Trim();
+                string secondaryUrl = row.Cell(_excelConfig.SecondaryColumn).GetString().Trim();
 
                 if (string.IsNullOrWhiteSpace(brNummer))
                     continue;
