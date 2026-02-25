@@ -1,6 +1,5 @@
 ﻿using PDFDownloader.Core.Interfaces;
 using PDFDownloader.Core.Models;
-using System.Runtime.InteropServices;
 
 namespace PDFDownloader.Core.Services
 {
