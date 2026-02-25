@@ -7,7 +7,7 @@ namespace PDFDownloader.Infrastructure.Storage
     {
         public Task WriteAsync(List<DownloadResult> results)
         {
-            return Task.FromResult(new List<DownloadResult>()); 
+            return Task.CompletedTask; 
         }
     }
 }

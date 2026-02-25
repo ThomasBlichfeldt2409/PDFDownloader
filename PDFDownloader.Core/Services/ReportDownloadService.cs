@@ -1,4 +1,6 @@
 ﻿using PDFDownloader.Core.Interfaces;
+using PDFDownloader.Core.Models;
+using System.Runtime.InteropServices;
 
 namespace PDFDownloader.Core.Services
 {
@@ -17,11 +19,9 @@ namespace PDFDownloader.Core.Services
 
         public async Task ExecuteAsync()
         {
-            // Read metadata
+            List<ReportMetadata> reports = await _metadataReader.ReadAsync();
 
-            // Loop through each report
-            
-            // Write results
+            Console.WriteLine($"Read {reports.Count} reports");
         }
     }
 }

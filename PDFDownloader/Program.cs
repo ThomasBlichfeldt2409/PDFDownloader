@@ -22,6 +22,7 @@ if (settings == null)
 
 string excelPath = Path.Combine(Directory.GetCurrentDirectory(), settings.Paths.ExcelFile);
 
+
 // Creating Infrastrucure
 IMetadataReader metadataReader = new ExcelMetadataReader(excelPath, settings.Excel);
 IReportDownloader reportDownloader = new HttpReportDownloader();
@@ -29,3 +30,5 @@ IResultWriter resultWriter = new JsonResultWriter();
 
 // Injecting Service with the created infrastructure
 ReportDownloadService reportDownloadService = new ReportDownloadService(metadataReader, reportDownloader, resultWriter);
+
+await reportDownloadService.ExecuteAsync();
