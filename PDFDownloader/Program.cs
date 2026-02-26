@@ -20,8 +20,10 @@ AppSettings? settings = configuration.Get<AppSettings>();
 if (settings == null)
     throw new Exception("Failed to load configuration.");
 
+// Fetching configurations from appsettings.json
 string excelPath = Path.Combine(Directory.GetCurrentDirectory(), settings.Paths.ExcelFile);
-
+string reportFolder = Path.Combine(Directory.GetCurrentDirectory(), settings.Paths.ReportOutputFolder);
+int maxConcurrency = settings.Download.MaxConcurrency;
 
 // Creating Infrastrucure
 IMetadataReader metadataReader = new ExcelMetadataReader(excelPath, settings.Excel);
@@ -29,6 +31,6 @@ IReportDownloader reportDownloader = new HttpReportDownloader();
 IResultWriter resultWriter = new JsonResultWriter();
 
 // Injecting Service with the created infrastructure
-ReportDownloadService reportDownloadService = new ReportDownloadService(metadataReader, reportDownloader, resultWriter);
+ReportDownloadService reportDownloadService = new ReportDownloadService(metadataReader, reportDownloader, resultWriter, reportFolder, maxConcurrency);
 
 await reportDownloadService.ExecuteAsync();
