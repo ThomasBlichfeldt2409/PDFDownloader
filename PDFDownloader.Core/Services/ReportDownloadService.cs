@@ -1,5 +1,6 @@
 ﻿using PDFDownloader.Core.Interfaces;
 using PDFDownloader.Core.Models;
+using System.Diagnostics;
 
 namespace PDFDownloader.Core.Services
 {
@@ -10,6 +11,9 @@ namespace PDFDownloader.Core.Services
         private readonly IResultWriter _resultWriter;
         private readonly string _reportOutputFolder;
         private readonly int _maxConcurrency;
+
+        private readonly object _resultsLock = new object();
+        private readonly object _progressLock = new object();
 
         public ReportDownloadService(
             IMetadataReader metadataReader, 
@@ -32,16 +36,26 @@ namespace PDFDownloader.Core.Services
 
             // Read URL's from the data
             List<ReportMetadata> reports = await _metadataReader.ReadAsync();
+
             List<DownloadResult> results = new List<DownloadResult>();
 
+            // Concurrency Controller - max of _maxConcurrency at a time
             using SemaphoreSlim semaphore = new SemaphoreSlim(_maxConcurrency);
 
+            // Storage for all running tasks
             List<Task> tasks = new List<Task>();
+
+            int completedCount = 0;
+            int totalCount = reports.Count;
+
+            Console.WriteLine("Starting Downloading...");
 
             foreach (ReportMetadata report in reports)
             {
+                // Wait for available slot
                 await semaphore.WaitAsync();
 
+                // Creates task
                 Task task = Task.Run(async () =>
                 {
                     try
@@ -62,7 +76,8 @@ namespace PDFDownloader.Core.Services
                             isDownloaded = await _reportDownloader.DownloadAsync(report.SecondaryUrl, filePath);
                         }
 
-                        lock (results)
+                        // Add result - lock ensures only one thread may enter this block at a time
+                        lock (_resultsLock)
                         {
                             results.Add(new DownloadResult
                             {
@@ -70,9 +85,24 @@ namespace PDFDownloader.Core.Services
                                 IsDownloaded = isDownloaded
                             });
                         }
+
+                        // Update progress bar - lock ensures only one thread may enter this block at a time
+                        lock (_progressLock)
+                        { 
+                            completedCount++;
+                            int percent = (int)((double)completedCount / reports.Count * 100);
+
+                            Console.CursorLeft = 0;
+                            Console.Write($"Downloading PDF Process: {percent}% ");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(new string('|', percent / 2));
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write(new string('|', 50 - percent / 2));
+                        }
                     }
                     finally
                     {
+                        // Release task to make room for new one
                         semaphore.Release();
                     }
                 });
@@ -80,6 +110,7 @@ namespace PDFDownloader.Core.Services
                 tasks.Add(task);
             }
 
+            // Waits until every download is finished
             await Task.WhenAll(tasks);
         }
     }

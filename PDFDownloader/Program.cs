@@ -21,8 +21,10 @@ if (settings == null)
     throw new Exception("Failed to load configuration.");
 
 // Fetching configurations from appsettings.json
-string excelPath = Path.Combine(Directory.GetCurrentDirectory(), settings.Paths.ExcelFile);
-string reportFolder = Path.Combine(Directory.GetCurrentDirectory(), settings.Paths.ReportOutputFolder);
+string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName;
+
+string excelPath = Path.Combine(projectRoot, settings.Paths.ExcelFile);
+string reportFolder = Path.Combine(projectRoot, settings.Paths.ReportOutputFolder);
 int maxConcurrency = settings.Download.MaxConcurrency;
 
 // Creating Infrastrucure

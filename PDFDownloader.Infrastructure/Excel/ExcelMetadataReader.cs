@@ -31,6 +31,10 @@ namespace PDFDownloader.Infrastructure.Excel
             // Skip(1) -> Skips the first row (header row)
             IEnumerable<IXLRangeRow> rows = worksheet.RangeUsed().RowsUsed().Skip(_excelConfig.StartRow - 1);
 
+            Console.WriteLine("Starting fething URL's...");
+            int completedRows = 0;
+            int totalRows = rows.Count();
+
             foreach (IXLRangeRow row in rows)
             {
                 string brNummer = row.Cell(_excelConfig.BRNummerColumn).GetString().Trim();
@@ -48,6 +52,17 @@ namespace PDFDownloader.Infrastructure.Excel
                     PrimaryUrl = primaryUrl,
                     SecondaryUrl = string.IsNullOrWhiteSpace(secondaryUrl) ? null : secondaryUrl
                 });
+
+                Console.CursorLeft = 0;
+                completedRows++;
+                int percent = (int)((double)completedRows / totalRows * 100);
+
+                Console.CursorLeft = 0;
+                Console.Write($"Downloading PDF Process: {percent}% ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(new string('|', percent / 2));
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(new string('|', 50 - percent / 2));
             }
 
             return Task.FromResult(reports);
