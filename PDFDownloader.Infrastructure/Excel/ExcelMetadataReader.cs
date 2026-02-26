@@ -58,13 +58,14 @@ namespace PDFDownloader.Infrastructure.Excel
                 int percent = (int)((double)completedRows / totalRows * 100);
 
                 Console.CursorLeft = 0;
-                Console.Write($"Downloading PDF Process: {percent}% ");
+                Console.Write($"Fetching URL Process: {percent}% ");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write(new string('|', percent / 2));
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write(new string('|', 50 - percent / 2));
             }
 
+            Console.WriteLine();
             return Task.FromResult(reports);
         }
     }

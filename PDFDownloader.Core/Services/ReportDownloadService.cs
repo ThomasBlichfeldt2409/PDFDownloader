@@ -112,6 +112,12 @@ namespace PDFDownloader.Core.Services
 
             // Waits until every download is finished
             await Task.WhenAll(tasks);
+            Console.WriteLine();
+
+            // Create JSON file with results
+            await _resultWriter.WriteAsync(results);
+
+            Console.WriteLine("Succesfully writes results to JSON.");
         }
     }
 }

@@ -25,12 +25,13 @@ string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory())!.Paren
 
 string excelPath = Path.Combine(projectRoot, settings.Paths.ExcelFile);
 string reportFolder = Path.Combine(projectRoot, settings.Paths.ReportOutputFolder);
+string resultFilePath = Path.Combine(projectRoot, settings.Paths.ResultFile);
 int maxConcurrency = settings.Download.MaxConcurrency;
 
 // Creating Infrastrucure
 IMetadataReader metadataReader = new ExcelMetadataReader(excelPath, settings.Excel);
 IReportDownloader reportDownloader = new HttpReportDownloader();
-IResultWriter resultWriter = new JsonResultWriter();
+IResultWriter resultWriter = new JsonResultWriter(resultFilePath);
 
 // Injecting Service with the created infrastructure
 ReportDownloadService reportDownloadService = new ReportDownloadService(metadataReader, reportDownloader, resultWriter, reportFolder, maxConcurrency);
