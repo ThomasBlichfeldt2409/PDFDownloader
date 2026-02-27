@@ -17,6 +17,7 @@ namespace PDFDownloader.Infrastructure.Storage
         public async Task WriteAsync(List<DownloadResult> results)
         {
             Console.WriteLine("Writes results to JSON...");
+
             // Ensure directory exists
             string? directory = Path.GetDirectoryName(_resultFilePath);
 
